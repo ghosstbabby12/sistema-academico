@@ -1,0 +1,106 @@
+@startuml SistemaAcademico
+
+skinparam classAttributeIconSize 0
+skinparam backgroundColor #FFFFFF
+skinparam defaultFontName Arial
+skinparam class {
+    BackgroundColor White
+    BorderColor #555555
+    HeaderBackgroundColor #DAE8FC
+    HeaderFontColor #000000
+    ArrowColor #555555
+}
+skinparam interface {
+    BackgroundColor #D5E8D4
+    BorderColor #555555
+    HeaderBackgroundColor #D5E8D4
+}
+skinparam packageStyle rectangle
+skinparam package {
+    BorderColor #888888
+    BackgroundColor #FAFAFA
+}
+
+' ===== CAPA DE DOMINIO =====
+package "Capa de Dominio" {
+    class Persona {
+        - id: Long
+        - nombre: String
+        - correo: String
+        --
+        + Persona()
+        + Persona(id: Long, nombre: String, correo: String)
+        + getId(): Long
+        + getNombre(): String
+        + getCorreo(): String
+        + setId(id: Long): void
+        + setNombre(nombre: String): void
+        + setCorreo(correo: String): void
+    }
+}
+
+' ===== CAPA DE ENTIDADES =====
+package "Capa de Entidades" {
+    class Administrativo {
+        - area: String
+        --
+        + Administrativo()
+        + Administrativo(area: String)
+        + getArea(): String
+        + setArea(area: String): void
+        + aprobarSolicitud(codigoSolicitud: String): void
+        + enviarNotificacion(mensaje: String): void
+    }
+
+    class Estudiante {
+        - codigo: String
+        --
+        + Estudiante()
+        + Estudiante(codigo: String)
+        + getCodigo(): String
+        + setCodigo(codigo: String): void
+    }
+
+    class Profesor {
+        - especialidad: String
+        --
+        + Profesor()
+        + Profesor(especialidad: String)
+        + getEspecialidad(): String
+        + setEspecialidad(especialidad: String): void
+        + evaluarEstudiante(estudiante: String, trabajo: String): void
+        + login(usuario: String, password: String): boolean
+    }
+}
+
+' ===== CAPA DE INTERFACES =====
+package "Capa de Interfaces" {
+    interface Aprobador {
+        + aprobarSolicitud(codigoSolicitud: String): void
+    }
+
+    interface Notificable {
+        + enviarNotificacion(mensaje: String): void
+    }
+
+    interface Autenticable {
+        + login(usuario: String, password: String): boolean
+    }
+
+    interface Evaluador {
+        + evaluarEstudiante(estudiante: String, trabajo: String): void
+    }
+}
+
+' ===== HERENCIA =====
+Persona <|-- Administrativo
+Persona <|-- Estudiante
+Persona <|-- Profesor
+
+' ===== IMPLEMENTACION =====
+Aprobador    <|.. Administrativo
+Notificable  <|.. Administrativo
+Autenticable <|.. Profesor
+Evaluador    <|.. Profesor
+
+@enduml
