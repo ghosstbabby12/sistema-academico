@@ -2,7 +2,7 @@
 
 API REST desarrollada con Spring Boot que implementa herencia múltiple con las entidades Persona, Estudiante, Profesor y Administrativo.
 
-# (Observa el diagrama de clases en la wiki!)
+# Observa el diagrama de clases en la wiki!
 
 ## Tecnologías
 - Java 17
